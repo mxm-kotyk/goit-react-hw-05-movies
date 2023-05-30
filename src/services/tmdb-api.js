@@ -9,25 +9,25 @@ axios.defaults.params = {
 
 export const getTrendingMovies = async () => {
   const response = await axios.get('/trending/movie/day');
-
-  console.log(response.data);
   return response.data;
 };
 
-// const api = axios.create({
-//   baseURL: 'https://api.themoviedb.org/3',
-//   headers: {
-//     accept: 'application/json',
-//     Authorization:
-//       'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTc5MzBmYThlM2Y0YmRlMjJlNmJhOThjYjVmODlkMCIsInN1YiI6IjY0NzI1MDU3OTQwOGVjMDBjMjhlODEyOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2t5J7zlB3108aQWGj14IyL24scGk6ECOKuBBZUd14uk',
-//   },
-// });
+export const getMoviesBySearch = async query => {
+  const response = await axios.get(`/search/movie?query=${query}`);
+  return response.data;
+};
 
-// const options = {
-//   method: 'GET',
-//   headers: {
-//     accept: 'application/json',
-//     Authorization:
-//       'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTc5MzBmYThlM2Y0YmRlMjJlNmJhOThjYjVmODlkMCIsInN1YiI6IjY0NzI1MDU3OTQwOGVjMDBjMjhlODEyOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2t5J7zlB3108aQWGj14IyL24scGk6ECOKuBBZUd14uk',
-//   },
-// };
+export const getMovieById = async id => {
+  const response = await axios.get(`/movie/${id}`);
+  return response.data;
+};
+
+export const getReviews = async id => {
+  const response = await axios.get(`/movie/${id}/reviews`);
+  return response.data;
+};
+
+export const getCredits = async id => {
+  const response = await axios.get(`/movie/${id}/credits`);
+  return response.data;
+};

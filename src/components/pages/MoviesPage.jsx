@@ -1,28 +1,33 @@
+import MoviesListItem from 'components/MoviesListItem/MoviesListItem';
+import SearchForm from 'components/SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { getTrendingMovies } from 'services/tmdb-api';
+import { getMoviesBySearch } from 'services/tmdb-api';
 
 const MoviesPage = () => {
-  const [trending, setTrending] = useState([]);
-  console.log(trending);
+  const [query, setQuery] = useState('');
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    const getMovies = async () => {
-      const data = await getTrendingMovies();
-      setTrending(data.results);
-      console.log(Date.now());
-    };
-    getMovies();
-  }, []);
+    if (!query) return;
+    getMovies(query);
+  }, [query]);
+
+  const handleSubmit = value => {
+    setQuery(value);
+  };
+
+  const getMovies = async query => {
+    const data = await getMoviesBySearch(query);
+    setMovies(data.results);
+  };
 
   return (
     <>
-      <h1>Trending Today</h1>
+      <SearchForm onSubmit={handleSubmit} />
+      <h2>Showing results for "{`${query}`}"</h2>
       <ul>
-        {trending.map(movie => (
-          <li key={movie.id}>
-            <Link to={`${movie.id}`}>{movie.original_title}</Link>
-          </li>
+        {movies.map(movie => (
+          <MoviesListItem movie={movie} key={movie.id} />
         ))}
       </ul>
     </>
