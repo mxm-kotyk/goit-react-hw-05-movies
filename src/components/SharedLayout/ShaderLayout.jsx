@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import { NavList } from './ShaderLayout.sytled';
+import { Outlet } from 'react-router-dom';
+import { NavList, NavigationLink } from './ShaderLayout.sytled';
+import Loader from 'components/loaders/Loader';
 
 const ShaderLayout = () => {
   return (
@@ -9,16 +10,16 @@ const ShaderLayout = () => {
         <nav>
           <NavList>
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavigationLink to="/">Home</NavigationLink>
             </li>
             <li>
-              <NavLink to="/movies">Movies</NavLink>
+              <NavigationLink to="/movies">Movies</NavigationLink>
             </li>
           </NavList>
         </nav>
       </header>
       <main>
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </main>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button, Input } from './SearchForm.styled';
 
 const SearchForm = ({ onSubmit }) => {
   const [value, setValue] = useState('');
@@ -16,8 +17,8 @@ const SearchForm = ({ onSubmit }) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="query" velue={value} onChange={handleChange} />
-        <button type="submit">Search</button>
+        <Input type="text" name="query" value={value} onChange={handleChange} />
+        <Button type="submit">Search</Button>
       </form>
     </>
   );
