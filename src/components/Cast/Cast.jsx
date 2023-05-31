@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCredits } from 'services/tmdb-api';
@@ -12,7 +13,6 @@ const Cast = () => {
 
   const getMovieCast = async id => {
     const credits = await getCredits(id);
-    console.log(credits.cast);
     setCast(credits.cast);
   };
 
@@ -33,6 +33,13 @@ const Cast = () => {
       </ul>
     </div>
   );
+};
+
+Cast.propTypes = {
+  id: PropTypes.string,
+  profile_path: PropTypes.string,
+  name: PropTypes.string,
+  character: PropTypes.string,
 };
 
 export default Cast;

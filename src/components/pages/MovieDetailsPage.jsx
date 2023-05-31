@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovieById } from 'services/tmdb-api';
 
@@ -9,6 +9,7 @@ const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const location = useLocation();
   console.log(location);
+  const goBackHref = location.state ?? '/movies';
 
   useEffect(() => {
     getMovie(movieId);
@@ -28,7 +29,7 @@ const MovieDetailsPage = () => {
 
   return (
     <div>
-      <Link to={location.state}>Go Back</Link>
+      <Link to={goBackHref}>Go Back</Link>
       <div>
         <img
           src={`https://image.tmdb.org/t/p/w342${poster_path}`}
@@ -45,13 +46,15 @@ const MovieDetailsPage = () => {
       </div>
       <div>
         <h2>Additional information</h2>
-        <Link to="cast" state={location}>
+        <Link to="cast" state={goBackHref}>
           Cast
         </Link>
-        <Link to="reviews" state={location}>
+        <Link to="reviews" state={goBackHref}>
           Reviews
         </Link>
-        <Outlet />
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <Outlet />
+        </Suspense>
       </div>
     </div>
   );

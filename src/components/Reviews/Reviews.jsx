@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReviews } from 'services/tmdb-api';
@@ -13,7 +14,6 @@ const Reviews = () => {
   const getReviewsData = async id => {
     const reviewsData = await getReviews(id);
     setReviews(reviewsData.results);
-    console.log(reviewsData.results);
   };
   return (
     <div>
@@ -32,6 +32,12 @@ const Reviews = () => {
       )}
     </div>
   );
+};
+
+Reviews.propTypes = {
+  author: PropTypes.string,
+  id: PropTypes.string,
+  content: PropTypes.string,
 };
 
 export default Reviews;

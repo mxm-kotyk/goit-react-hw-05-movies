@@ -1,10 +1,12 @@
 import MoviesListItem from 'components/MoviesListItem/MoviesListItem';
 import SearchForm from 'components/SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { getMoviesBySearch } from 'services/tmdb-api';
 
 const MoviesPage = () => {
-  const [query, setQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query') ?? '';
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -13,7 +15,12 @@ const MoviesPage = () => {
   }, [query]);
 
   const handleSubmit = value => {
-    setQuery(value);
+    if (value === '') {
+      setSearchParams({});
+      setMovies([]);
+      return;
+    }
+    setSearchParams({ query: value });
   };
 
   const getMovies = async query => {
@@ -24,7 +31,7 @@ const MoviesPage = () => {
   return (
     <>
       <SearchForm onSubmit={handleSubmit} />
-      <h2>Showing results for "{`${query}`}"</h2>
+      {query && <h2>Showing results for "{`${query}`}"</h2>}
       <ul>
         {movies.map(movie => (
           <MoviesListItem movie={movie} key={movie.id} />
